@@ -51,6 +51,10 @@ const orderSchema = new mongoose.Schema(
       enum: ["delivery", "takeaway", "dinein"],
       default: "dinein",
     },
+    deliveryAddress: {
+      type: String,
+      required: false, // Only for delivery orders
+    },
     paymentId: {
       type: String,
       required: true,

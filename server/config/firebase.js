@@ -14,10 +14,11 @@ try {
   else if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
     console.log("Using Firebase service account from file...");
     const path = require("path");
+    // Resolve path relative to server root, not config folder
     const serviceAccountPath = path.resolve(
       __dirname,
-      "..",
-      process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace("./config/", "")
+      "../",
+      process.env.FIREBASE_SERVICE_ACCOUNT_KEY
     );
     serviceAccount = require(serviceAccountPath);
   } else {

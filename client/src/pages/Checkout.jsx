@@ -26,6 +26,7 @@ const Checkout = () => {
 
   // Delivery option state (radio button - required)
   const [deliveryOption, setDeliveryOption] = useState(""); // 'delivery', 'takeaway', or 'dinein'
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Delivery option fees
@@ -62,6 +63,12 @@ const Checkout = () => {
     // Validate delivery option is selected
     if (!deliveryOption) {
       alert("Please select a delivery option (Delivery, Takeaway, or Dine-in)");
+      return;
+    }
+
+    // Validate address for delivery option
+    if (deliveryOption === "delivery" && !deliveryAddress.trim()) {
+      alert("Please enter your address (Plot/House number)");
       return;
     }
 
@@ -116,6 +123,8 @@ const Checkout = () => {
               orderId: response.razorpay_order_id,
               signature: response.razorpay_signature,
               deliveryOption: deliveryOption,
+              deliveryAddress:
+                deliveryOption === "delivery" ? deliveryAddress : undefined,
             };
 
             const createOrderResponse = await fetch(`${API_URL}/orders`, {
@@ -416,6 +425,25 @@ const Checkout = () => {
                 </div>
               </div>
 
+              {/* Delivery Address - Show only for Delivery option */}
+              {deliveryOption === "delivery" && (
+                <div className="bg-blue-50 rounded-lg p-4 border-2 border-blue-200">
+                  <label className="block text-sm font-bold text-primary mb-2">
+                    Delivery Address *
+                  </label>
+                  <input
+                    type="text"
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    placeholder="Enter Plot number / House number"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent"
+                    required
+                  />
+                  <p className="text-xs text-gray-600 mt-2">
+                    Please enter your plot/house number for delivery
+                  </p>
+                </div>
+              )}
               {/* Pay Now Button */}
               <button
                 onClick={handlePayNow}
