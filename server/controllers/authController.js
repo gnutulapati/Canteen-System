@@ -43,12 +43,12 @@ exports.syncUser = async (req, res) => {
       });
     }
 
-    // Create new user with role 'student' (default)
+    // Create new user with role 'user' (default)
     user = new User({
       firebaseUid: uid,
       email: email || decodedToken.email,
       name: name || decodedToken.name || email?.split("@")[0] || "User",
-      role: "student",
+      role: "user",
     });
 
     await user.save();

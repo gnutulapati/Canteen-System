@@ -34,7 +34,7 @@ A modern, full-stack web application for managing canteen orders at SRCM Campus,
 ### 🔐 Authentication
 
 - **Google OAuth Integration** via Firebase
-- Role-based access control (Student/Admin)
+- Role-based access control (User/Admin)
 - Secure token-based authentication
 
 ### 🍕 Menu Management (Admin)
@@ -46,7 +46,7 @@ A modern, full-stack web application for managing canteen orders at SRCM Campus,
 
 ### 🛒 Order Management
 
-**For Students:**
+**For Users:**
 
 - Browse available menu items
 - Add items to cart with quantity selection
@@ -284,7 +284,7 @@ VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
 
 ## 📖 Usage
 
-### For Students
+### For Users
 
 1. **Sign In** with Google account
 2. **Browse Menu** - View available items by category

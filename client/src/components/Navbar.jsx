@@ -2,6 +2,7 @@ import { ShoppingCart, User, UtensilsCrossed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
@@ -17,7 +18,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-3">
             <img
-              src="/src/assets/logo.png"
+              src={logo}
               alt="SRCM Logo"
               className="h-10 w-10 object-contain"
               onError={(e) => {
