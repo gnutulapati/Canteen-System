@@ -6,9 +6,8 @@ const dotenv = require("dotenv");
 // Load environment variables
 dotenv.config();
 
-// Initialize Firebase Admin SDK
-const { initializeFirebase } = require("./config/firebase");
-initializeFirebase();
+// Initialize Firebase Admin SDK (auto-initializes on require)
+const admin = require("./config/firebase");
 
 // Initialize Express app
 const app = express();
