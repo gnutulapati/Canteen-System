@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Morning Breakfast",
+    "category": "Breakfast",
+    "price": 30,
+    "imageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&h=300&fit=crop",
+    "isAvailable": true
+  },
+  {
+    "name": "Full Lunch Thali",
+    "category": "Lunch",
+    "price": 50,
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+    "isAvailable": true
+  },
+  {
+    "name": "Evening Snacks",
+    "category": "Snacks",
+    "price": 25,
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop",
+    "isAvailable": true
+  },
+  {
+    "name": "Dinner Special",
+    "category": "Dinner",
+    "price": 40,
+    "imageUrl": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop",
+    "isAvailable": true
+  },
+  {
+    "name": "Tea/Coffee",
+    "category": "Drinks",
+    "price": 10,
+    "imageUrl": "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&h=300&fit=crop",
+    "isAvailable": true
+  },
+  {
+    "name": "Fresh Juice",
+    "category": "Drinks",
+    "price": 20,
+    "imageUrl": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=300&fit=crop",
+    "isAvailable": true
+  }
+]
