@@ -17,7 +17,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-3">
             <img
-              href="/src/assets/logo.png"
+              src="/src/assets/logo.png"
               alt="SRCM Logo"
               className="h-10 w-10 object-contain"
               onError={(e) => {
