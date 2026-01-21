@@ -105,7 +105,7 @@ const Profile = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4" />
-                  <span className="capitalize">{user?.role || "Student"}</span>
+                  <span className="capitalize">{user?.role || "User"}</span>
                 </div>
                 {user?.createdAt && (
                   <div className="flex items-center gap-2">

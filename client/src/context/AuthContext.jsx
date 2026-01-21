@@ -136,7 +136,7 @@ export const AuthProvider = ({ children }) => {
             firebaseUid: firebaseUser.uid,
             email: firebaseUser.email,
             name: firebaseUser.displayName || firebaseUser.email?.split("@")[0],
-            role: "student", // Default role if backend fails
+            role: "user", // Default role if backend fails
             firebaseUser,
             token: await firebaseUser.getIdToken(),
           });

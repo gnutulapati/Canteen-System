@@ -18,14 +18,11 @@ const Home = () => {
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900">
                 Welcome to SRCM Canteen
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 italic">
-                — Tumukunta
-              </p>
             </div>
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl mb-8 text-gray-700">
-              Delicious meals for the SRCM campus community
+              Delicious meals for the SRCM Tumukunta Ashram community
             </p>
           </div>
           <button
