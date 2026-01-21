@@ -1,41 +1,41 @@
 const admin = require("firebase-admin");
-const path = require("path");
 
-/**
- * Initialize Firebase Admin SDK
- * This should be called once when the server starts
- */
-const initializeFirebase = () => {
-  try {
-    // Check if already initialized
-    if (admin.apps.length > 0) {
-      console.log("✅ Firebase Admin already initialized");
-      return;
-    }
+let serviceAccount;
 
-    // Get service account path from environment variable
-    const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-
-    if (!serviceAccountPath) {
-      throw new Error(
-        "FIREBASE_SERVICE_ACCOUNT_KEY environment variable not set"
-      );
-    }
-
-    // Initialize Firebase Admin
-    const serviceAccount = require(path.resolve(serviceAccountPath));
-
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
-
-    console.log("✅ Firebase Admin SDK Initialized Successfully");
-  } catch (error) {
-    console.error("❌ Firebase Initialization Error:", error.message);
-    console.error("Make sure FIREBASE_SERVICE_ACCOUNT_KEY is set in .env file");
-    // Don't exit process, but log the error
-    // Server can still run for non-auth routes
+try {
+  // Check if base64 encoded service account is provided (for Render deployment)
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
+    console.log("Using base64-encoded Firebase service account...");
+    const base64String = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
+    const jsonString = Buffer.from(base64String, "base64").toString("utf-8");
+    serviceAccount = JSON.parse(jsonString);
   }
-};
+  // Otherwise, use file path (for local development)
+  else if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+    console.log("Using Firebase service account from file...");
+    const path = require("path");
+    const serviceAccountPath = path.resolve(
+      __dirname,
+      "..",
+      process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace("./config/", "")
+    );
+    serviceAccount = require(serviceAccountPath);
+  } else {
+    throw new Error(
+      "No Firebase service account configured. Set either FIREBASE_SERVICE_ACCOUNT_BASE64 or FIREBASE_SERVICE_ACCOUNT_KEY"
+    );
+  }
 
-module.exports = { initializeFirebase, admin };
+  // Initialize Firebase Admin
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+
+  console.log("✅ Firebase Admin SDK Initialized Successfully");
+} catch (error) {
+  console.error("❌ Firebase Initialization Error:", error.message);
+  console.error("Stack:", error.stack);
+  process.exit(1);
+}
+
+module.exports = admin;
