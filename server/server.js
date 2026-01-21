@@ -16,13 +16,41 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS Configuration - Allow Vite frontend (localhost:5173)
+// CORS Configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  process.env.CLIENT_URL,
+  "https://srcm-canteen.vercel.app",
+  /\.vercel\.app$/, // Allow all Vercel preview deployments
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      // Check if origin is in allowed list or matches regex
+      const isAllowed = allowedOrigins.some((allowed) => {
+        if (allowed instanceof RegExp) {
+          return allowed.test(origin);
+        }
+        return allowed === origin;
+      });
+
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        console.log(`Origin ${origin} not allowed by CORS`);
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
     credentials: true,
   })
 );
+
+console.log("🌐 CORS enabled for Vercel and localhost");
 
 // MongoDB Connection
 mongoose
@@ -38,43 +66,19 @@ mongoose
 // Basic Health Check Route
 app.get("/api/health", (req, res) => {
   res.status(200).json({
-    status: "OK",
-    message: "Canteen Ordering System API is running",
+    success: true,
+    message: "Server is running",
     timestamp: new Date().toISOString(),
   });
 });
 
-// Import Routes
-const authRoutes = require("./routes/authRoutes");
-const menuRoutes = require("./routes/menuRoutes");
-const orderRoutes = require("./routes/orderRoutes");
+// Routes
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/menu", require("./routes/menuRoutes"));
+app.use("/api/orders", require("./routes/orderRoutes"));
 
-// Use Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/menu", menuRoutes);
-app.use("/api/orders", orderRoutes);
-
-// 404 Handler
-app.use((req, res) => {
-  res.status(404).json({
-    error: "Route not found",
-    path: req.path,
-  });
-});
-
-// Error Handler Middleware
-app.use((err, req, res, next) => {
-  console.error("Error:", err.stack);
-  res.status(err.status || 500).json({
-    error: err.message || "Internal Server Error",
-  });
-});
-
-// Start Server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`🌐 Frontend CORS enabled for: http://localhost:5173`);
 });
-
-module.exports = app;
