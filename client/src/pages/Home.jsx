@@ -5,12 +5,12 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#EBF8FF]">
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary to-primary-dark text-white">
         <div className="container mx-auto px-4 py-20 text-center">
           <div className="flex justify-center mb-6">
-            <UtensilsCrossed className="h-20 w-20 text-secondary" />
+            <UtensilsCrossed className="h-20 w-20 text-white" />
           </div>
           <div className="flex flex-col items-center font-sans">
             {/* Header and Location Line */}
@@ -81,8 +81,10 @@ const Home = () => {
       {/* Call to Action */}
       <div className="bg-primary text-white py-12">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to order?</h2>
-          <p className="text-lg mb-6 text-gray-200">
+          <h2 className="text-3xl text-[#374151] font-bold mb-4">
+            Ready to order?
+          </h2>
+          <p className="text-lg mb-6 text-gray-700">
             Check out our delicious menu and place your order now!
           </p>
           <button
